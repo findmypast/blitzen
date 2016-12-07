@@ -3,8 +3,11 @@
   "version": "0.0.1",
   "description": "Trello scraper CLI tool",
   "scripts": {
+    "prepublish-to-npm": "supersoaker squirt -r https://registry.npmjs.org",
+    "publish-to-npm": "publish",
     "start": "node bin/index",
-    "test": "mocha"
+    "test": "mocha",
+    "test:ci": "mocha"
   },
   "repository": {
     "type": "git",
@@ -24,5 +27,10 @@
   "dependencies": {
     "chalk": "^1.1.3",
     "commander": "^2.9.0"
+  },
+  "devDependencies": {
+    "mocha": "^3.2.0",
+    "publish": "^0.6.0",
+    "supersoaker": "^1.0.1"
   }
 }

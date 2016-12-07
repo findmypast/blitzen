@@ -1,0 +1,25 @@
+version: '2'
+
+vars:
+  image: findmypast/blitzen
+
+tasks:
+
+  build:
+    description: Build docker image
+    do: shell
+    command: docker build --force-rm -t <%=image%> .
+
+  test:
+    description: Run tests inside docker image
+    do: shell
+    command: docker run --rm <%=image%> npm run test:ci
+
+  publish_to_npm:
+    description: Publish to NPM
+    do: shell
+    command: docker run -e NPM_USER -e NPM_PASSWORD -e NPM_EMAIL --rm <%=image%> npm run publish-to-npm
+    env:
+      NPM_USER: <%=npm_user%>
+      NPM_PASSWORD: <%=npm_password%>
+      NPM_EMAIL: <%=npm_email%>
