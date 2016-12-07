@@ -1,0 +1,16 @@
+---
+  extends: eslint
+  env:
+    node: true
+    es6: true
+  rules:
+    quotes:
+      - error
+      - single
+    indent:
+      - error
+      - 2
+    require-jsdoc: 'off'
+    brace-style:
+      - error
+      - stroustrup
