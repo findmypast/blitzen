@@ -10,6 +10,11 @@ tasks:
     do: shell
     command: docker build --force-rm -t <%=image%> .
 
+  lint:
+    description: Lint your javascript
+    do: shell
+    command: docker run --rm <%=image%> npm run lint
+
   test:
     description: Run tests inside docker image
     do: shell
@@ -23,8 +28,3 @@ tasks:
       NPM_USER: <%=npm_user%>
       NPM_PASSWORD: <%=npm_password%>
       NPM_EMAIL: <%=npm_email%>
-
-  lint:
-    description: Lint your javascript
-    do: shell
-    command: npm run lint
