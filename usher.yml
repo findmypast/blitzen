@@ -10,11 +10,6 @@ tasks:
     do: shell
     command: node bin/index
 
-  build:
-    description: Build docker image
-    do: shell
-    command: docker build --force-rm -t <%=image%> .
-
   lint:
     description: Lint your javascript
     do: shell
@@ -32,7 +27,7 @@ tasks:
 
   publish_to_npm:
     description: Publish the module to NPM
-    do: series
+    do: sequence
     actions:
       - description: Create the .npmrc files locally
         do: shell
@@ -45,6 +40,16 @@ tasks:
     description: Lint your javascript
     do: shell
     command: docker run --rm <%=image%> usher run lint
+
+  docker_build:
+    description: Build docker image
+    do: shell
+    command: docker build --force-rm --no-cache -t <%=image%> .
+
+  docker_usher_list:
+    description: Build docker image
+    do: shell
+    command: docker run --rm <%=image%> usher list
 
   docker_publish_to_npm:
     description: Publish to NPM within the docker container

@@ -2,7 +2,6 @@
   "name": "blitzen",
   "version": "0.0.1",
   "description": "Trello scraper CLI tool",
-  "scripts": { },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/findmypast/blitzen.git"
