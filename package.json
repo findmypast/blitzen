@@ -1,6 +1,6 @@
 {
   "name": "blitzen",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Trello scraper CLI tool",
   "scripts": {
     "cli": "node bin/index",
