@@ -6,9 +6,9 @@ vars:
 tasks:
 
   pre_push:
-    do: test_local
+    do: local_test
 
-  publish_to_npm:
+  local_publish:
     description: Publish the module to NPM
     do: sequence
     actions:
@@ -19,7 +19,7 @@ tasks:
         do: shell
         command: npm run publish_to_npm
 
-  test_local:
+  local_test:
     description: running
     do: sequence
     actions:
@@ -38,12 +38,12 @@ tasks:
   test:
     description: Runs test within the docker container
     do: shell
-    command: docker run --rm <%=image%> usher run test_local
+    command: docker run --rm <%=image%> usher run local_test
 
   publish:
     description: Publish to NPM within the docker container
     do: shell
-    command: docker run -e NPM_USER -e NPM_PASSWORD -e NPM_EMAIL --rm <%=image%> usher run publish_to_npm
+    command: docker run -e NPM_USER -e NPM_PASSWORD -e NPM_EMAIL --rm <%=image%> usher run local_publish
     env:
       NPM_USER: <%=user%>
       NPM_PASSWORD: <%=password%>
