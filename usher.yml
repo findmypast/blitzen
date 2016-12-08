@@ -6,7 +6,7 @@ vars:
 tasks:
 
   pre_push:
-    do: test
+    do: test_local
 
   publish_to_npm:
     description: Publish the module to NPM
@@ -19,21 +19,26 @@ tasks:
         do: shell
         command: npm run publish_to_npm
 
+  test_local:
+    description: running
+    do: sequence
+    actions:
+      - description: Lint your javascript
+      do: shell
+      command: npm run lint
+      - description: Run teamcity tests inside docker image
+      do: shell
+      command: npm run test_ci
+
   build:
     description: Build docker image
     do: shell
     command: docker build --force-rm --no-cache -t <%=image%> .
 
   test:
-    description: git Pre push
-    do: sequence
-    actions:
-      - description: Lint your javascript
-        do: shell
-        command: npm run lint
-      - description: Run teamcity tests inside docker image
-        do: shell
-        command: npm run test_ci
+    description: Runs test within the docker container
+    do: shell
+    command: docker run --rm <%=image%> usher run test_local
 
   publish:
     description: Publish to NPM within the docker container
