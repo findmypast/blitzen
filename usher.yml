@@ -5,6 +5,11 @@ vars:
 
 tasks:
 
+  cli:
+    description: Test the cli locally
+    do: shell
+    command: node bin/index
+
   build:
     description: Build docker image
     do: shell
@@ -13,17 +18,38 @@ tasks:
   lint:
     description: Lint your javascript
     do: shell
-    command: docker run --rm <%=image%> npm run lint
+    command: eslint ./src/ --max-warnings=0
 
   test:
+    description: Run tests
+    do: shell
+    command: nyc mocha --opts test/local.opts src/**/*spec.js
+
+  test_ci:
     description: Run tests inside docker image
     do: shell
-    command: docker run --rm <%=image%> npm run test:ci
+    command: nyc mocha --opts test/teamcity.opts src/**/*spec.js
 
   publish_to_npm:
-    description: Publish to NPM
+    description: Publish the module to NPM
+    do: series
+    actions:
+      - description: Create the .npmrc files locally
+        do: shell
+        command: supersoaker squirt -r https://registry.npmjs.org
+      - description: Use the npm module publish to publish the module
+        do: shell
+        command: publish
+
+  docker_lint:
+    description: Lint your javascript
     do: shell
-    command: docker run -e NPM_USER -e NPM_PASSWORD -e NPM_EMAIL --rm <%=image%> npm run publish-to-npm
+    command: docker run --rm <%=image%> usher run lint
+
+  docker_publish_to_npm:
+    description: Publish to NPM within the docker container
+    do: shell
+    command: docker run -e NPM_USER -e NPM_PASSWORD -e NPM_EMAIL --rm <%=image%> usher run publish_to_npm
     env:
       NPM_USER: <%=npm_user%>
       NPM_PASSWORD: <%=npm_password%>

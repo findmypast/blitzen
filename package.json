@@ -2,14 +2,7 @@
   "name": "blitzen",
   "version": "0.0.1",
   "description": "Trello scraper CLI tool",
-  "scripts": {
-    "lint": "eslint ./src/ --max-warnings=0",
-    "prepublish-to-npm": "supersoaker squirt -r https://registry.npmjs.org",
-    "publish-to-npm": "publish",
-    "start": "node bin/index",
-    "test": "mocha",
-    "test:ci": "mocha"
-  },
+  "scripts": { },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/findmypast/blitzen.git"
@@ -33,6 +26,7 @@
     "eslint": "^3.11.1",
     "eslint-config-eslint": "^3.0.0",
     "mocha": "^3.2.0",
+    "nyc": "^10.0.0",
     "publish": "^0.6.0",
     "supersoaker": "^1.0.1"
   },
