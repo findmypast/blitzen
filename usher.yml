@@ -8,35 +8,40 @@ tasks:
   cli:
     description: Test the cli locally
     do: shell
-    command: node bin/index
+    command: npm run cli
 
   lint:
     description: Lint your javascript
     do: shell
-    command: eslint ./src/ --max-warnings=0
+    command: npm run lint
 
   test:
     description: Run tests
     do: shell
-    command: nyc mocha --opts test/local.opts src/**/*spec.js
+    command: npm run test
 
   test_ci:
     description: Run tests inside docker image
     do: shell
-    command: nyc mocha --opts test/teamcity.opts src/**/*spec.js
+    command: npm run test_ci
+
+  pre_push:
+    description: git Pre push
+    do: sequence
+    actions:
+      - do: lint
+      - do: test
 
   publish_to_npm:
     description: Publish the module to NPM
     do: sequence
     actions:
-      - do: lint
-      - do: test
       - description: Create the .npmrc files locally
         do: shell
-        command: supersoaker squirt -r https://registry.npmjs.org
+        command: npm run publish_add_creds
       - description: Use the npm module publish to publish the module
         do: shell
-        command: publish
+        command: npm run publish_to_npm
 
   docker_build:
     description: Build docker image
@@ -51,3 +56,14 @@ tasks:
       NPM_USER: <%=npm_user%>
       NPM_PASSWORD: <%=npm_password%>
       NPM_EMAIL: <%=npm_email%>
+
+  setup:
+    description: Publish the module to NPM
+    do: sequence
+    actions:
+    - description: Install pre-push shell file
+      do: shell
+      command: cp scripts/pre-push .git/hooks
+    - description: Change the permissions
+      do: shell
+      command: chmod +x .git/hooks/pre-push
