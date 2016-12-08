@@ -29,6 +29,8 @@ tasks:
     description: Publish the module to NPM
     do: sequence
     actions:
+      - do: lint
+      - do: test
       - description: Create the .npmrc files locally
         do: shell
         command: supersoaker squirt -r https://registry.npmjs.org
@@ -36,20 +38,10 @@ tasks:
         do: shell
         command: publish
 
-  docker_lint:
-    description: Lint your javascript
-    do: shell
-    command: docker run --rm <%=image%> usher run lint
-
   docker_build:
     description: Build docker image
     do: shell
     command: docker build --force-rm --no-cache -t <%=image%> .
-
-  docker_usher_list:
-    description: Build docker image
-    do: shell
-    command: docker run --rm <%=image%> usher list
 
   docker_publish_to_npm:
     description: Publish to NPM within the docker container
