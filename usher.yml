@@ -24,11 +24,11 @@ tasks:
     do: sequence
     actions:
       - description: Lint your javascript
-      do: shell
-      command: npm run lint
+        do: shell
+        command: npm run lint
       - description: Run teamcity tests inside docker image
-      do: shell
-      command: npm run test_ci
+        do: shell
+        command: npm run test_ci
 
   build:
     description: Build docker image
