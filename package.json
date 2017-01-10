@@ -3,6 +3,7 @@
   "version": "0.0.3",
   "description": "Trello scraper CLI tool",
   "scripts": {
+    "build-grammar": "nearleyc src/grammar/blitzen.ne -o src/grammar/grammar.js",
     "cli": "node bin/index",
     "lint": "eslint ./src/ --max-warnings=0",
     "test": "nyc mocha --opts test/local.opts src/**/*spec.js",
