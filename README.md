@@ -1,2 +1,2 @@
-# blitzen
-Trello scraper CLI tool
+# Blitzen
+DEPRECATED - Trello scraper CLI tool
