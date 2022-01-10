@@ -1,6 +1,6 @@
 {
   "name": "blitzen",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Trello scraper CLI tool",
   "scripts": {
     "build-grammar": "nearleyc src/grammar/blitzen.ne -o src/grammar/grammar.js",
